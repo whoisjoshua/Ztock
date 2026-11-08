@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ztock: Learn the Market</title>
+  <meta name="description" content="A free, static stock dashboard that teaches valuation, technical indicators and machine learning by grading them on real data.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Optional, git-ignored local keys. Missing on GitHub Pages, which is fine: use ⚙ Settings there. -->
+  <script src="config.local.js" onerror="window.APP_CONFIG = window.APP_CONFIG || {}"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Toggle techniques panel">☰</button>
+    <div class="brand"><span class="logo">📈</span><b>Ztock</b><span class="tag">learn markets with ML</span></div>
+    <div class="search">
+      <input id="search" type="search" autocomplete="off" spellcheck="false" placeholder="Search a ticker or company: AAPL, Tesla, SPY…" aria-label="Search ticker">
+      <div id="results" class="results" hidden></div>
+    </div>
+    <div class="status">
+      <span id="liveDot" class="dot"></span><span id="liveText">offline</span>
+      <span class="sep">·</span><span id="budget" class="mono">0/60</span>
+      <button class="q" data-help="ratelimit" aria-label="About API limits">?</button>
+    </div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙</button>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <section id="watchlist" class="watchlist"></section>
+      <section id="detail"></section>
+      <footer class="foot">
+        For learning only, not financial advice. Data: Finnhub (quotes, fundamentals, news) &amp; Twelve Data (daily history).
+        <button class="q" data-help="datasource">?</button>
+      </footer>
+    </main>
+  </div>
+
+  <dialog id="helpDlg" class="dlg">
+    <form method="dialog"><button class="close" aria-label="Close">✕</button></form>
+    <div id="helpBody"></div>
+  </dialog>
+
+  <dialog id="settingsDlg" class="dlg">
+    <form method="dialog"><button class="close" aria-label="Close">✕</button></form>
+    <h2>Settings</h2>
+    <label class="field">Finnhub API key
+      <input id="fhKey" type="password" autocomplete="off" placeholder="from finnhub.io/dashboard">
+    </label>
+    <label class="field">Twelve Data API key <small>(free, for price history. Without it only AAPL loads real history.)</small>
+      <input id="tdKey" type="password" autocomplete="off" placeholder="from twelvedata.com/account/api-keys">
+    </label>
+    <p class="note">Keys are saved only in this browser (localStorage) and stay there until you remove them. They're never in the repo,
+      and other visitors can't see them.</p>
+    <div class="row-btns">
+      <button id="saveKeys" class="btn primary">Save &amp; reload data</button>
+      <button id="clearCache" class="btn">Clear cached data</button>
+    </div>
+    <h4 style="margin:18px 0 4px;font-size:13px">Use Ztock on another device</h4>
+    <p class="note">Copy a private setup link and open it once on your phone or another browser. It saves your keys there automatically,
+      then removes them from the address bar. Treat the link like a password, e.g. keep it in a password manager or a note to yourself.</p>
+    <div class="row-btns">
+      <button id="copyLink" class="btn">Copy my setup link</button>
+      <button id="forgetKeys" class="btn">Forget keys on this device</button>
+      <span id="linkMsg" class="note" style="align-self:center"></span>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
